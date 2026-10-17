@@ -1,0 +1,158 @@
+# Privacy Policy
+
+**Command Center for Okta** (the "extension"), by Fenil Panchal.
+An independent extension. Not affiliated with, endorsed by, or sponsored by
+Okta, Inc. Okta is a trademark of Okta, Inc.
+
+Last updated: October 16, 2026
+
+## The short version
+
+The extension sends nothing to its developer or to anyone else. It has no
+server, no analytics, no telemetry, and no crash reporting. Every request it
+makes goes to your own Okta organization, from your own browser, using the Okta
+session you are already signed in to.
+
+What you choose to keep, such as notes, snapshots and access reviews, stays in
+your browser on this computer. The developer cannot see any of it, because it
+never leaves your machine.
+
+## What the extension reads
+
+While you have your Okta admin console open, the extension issues read-only
+requests to your organization's Okta API on your behalf. Depending on which
+screen you open, that can include:
+
+- user profiles, status, and sign-in history
+- group definitions, membership, and group rules
+- applications, their assignments, and their provisioning settings
+- authentication policies and their rules
+- administrator role assignments
+- system log events
+
+This is your own Okta directory data, read with your own permissions. The
+extension cannot see anything your Okta administrator role cannot already see.
+
+If you turn on **Live activity**, the extension also reads your org's system log
+about once a minute while the panel is open, to show admin changes as they
+happen. It is off until you turn it on, and it pauses whenever the panel is
+hidden, the browser is offline, or your org's rate limit runs low.
+
+## What the extension stores
+
+Everything below is kept in Chrome's storage for this extension, on this
+computer, in this browser profile. None of it is sent anywhere.
+
+**Your preferences**, which apply in every org:
+
+| Key | What it is |
+| --- | --- |
+| `theme` | light or dark |
+| `density` | row spacing |
+| `zoom` | text size |
+| `railPinned` | whether the navigation rail is pinned open |
+| `syncFollow` | whether the panel follows the admin console |
+| `syncPush` | whether the console follows the panel |
+| `consoleActions` | whether the launcher is shown in the admin console |
+| `liveStrip` | whether Live activity is on, how often it checks, and when it pauses |
+| `exportColumns`, `exportPreamble` | the columns you chose for exports, and whether files start with a description of themselves |
+| `schemaVersion` | the layout of this storage, so an update can carry it forward |
+
+**What you choose to keep, per org.** Each is stored under that org's address,
+so one org's data is never shown in another:
+
+| What | What it holds | Kept because |
+| --- | --- | --- |
+| Notes | the text you write, and which person, group, application or rule it is about | you wrote a note |
+| Watchlist | the groups and applications you watch, and their member counts when last checked | you chose to watch one |
+| Snapshots | the members of one group or application at the moment you took it: each person's Okta id, name and login | you took a snapshot, to compare with later |
+| Access reviews | the people and access under review, your decisions, and your comments | you started a review |
+| Privileged applications | which applications you marked as privileged | you marked them |
+| Certificate check | how many signing certificates are expired or expiring, and the names of the three that expire soonest | you, or the home screen, ran the check |
+| Since you last looked | the counts on the home screen the last time you saw it, so it can show what changed | you opened the home screen |
+
+You can delete any note, snapshot or access review from the panel, and stop
+watching anything you watch. Removing the extension from Chrome deletes
+everything it stored.
+
+**To a file, only when you ask.** An export is written to your downloads folder
+as CSV or JSON. It contains the Okta data on the screen you exported, plus your
+Okta org's address, your Okta username, and the time, so the file can be used
+as audit evidence. Nothing is written without you clicking Export, and the file
+goes only where your browser puts downloads.
+
+**In memory, briefly.** Okta API answers are cached inside the extension's
+background worker so the same data is not read twice and your org's Okta rate
+limits are respected. Live activity keeps the events it has shown in memory
+too. This is ordinary memory, never written to disk, and Chrome discards it when
+the panel closes or the worker stops.
+
+## Credentials
+
+The extension never asks for, receives, or stores an Okta password, API token,
+client secret, or private key.
+
+It works by reusing the session you already have. A small script running on
+your admin console page reads the anti-forgery token that the console itself
+places in the page, and issues same-origin requests with your existing session
+cookie. Chrome keeps that cookie. The extension never reads it, and could not
+send it anywhere, because the requests go only to your own Okta organization.
+
+Because the reads use your session, they appear in your Okta System Log
+attributed to you, exactly as if you had clicked through the admin console
+yourself. That is deliberate: your organization's audit trail stays accurate.
+
+## Read-only
+
+The extension cannot change anything in Okta. This is enforced in three
+independent places:
+
+1. the script on the console page accepts only `GET` and `HEAD` requests
+2. it rejects any path that is not a same-origin `/api/v1/` path
+3. there is no interface anywhere in the extension that submits a change
+
+The rule builder and policy builder validate and explain what you write and
+produce what Okta would need, but they cannot save. You copy the result into
+Okta yourself.
+
+## Where the extension runs
+
+Only on your Okta admin console, and only on these paths:
+
+```
+https://*.okta.com/admin/*         https://*.okta.com/report*
+https://*.oktapreview.com/admin/*  https://*.oktapreview.com/report*
+https://*.okta-emea.com/admin/*    https://*.okta-emea.com/report*
+```
+
+It does not run on Okta sign-in pages, on end-user dashboards, or on any other
+website, and it cannot see which other sites you visit.
+
+## Third parties
+
+There are none. No data is sold, shared, or transferred to anyone. No
+third-party code, library, font, or service is loaded at runtime. All code ships
+inside the extension package.
+
+## Permissions, and why each one exists
+
+| Permission | Why |
+| --- | --- |
+| `storage` | keep your preferences, and the notes, watchlist, snapshots and reviews you choose to keep, as listed above |
+| `sidePanel` | the interface is a Chrome side panel, so it can sit beside the console |
+| `scripting` | put the console-page script back into an admin tab that was already open, for example after the extension updates |
+| host access to the admin console paths above | follow which console screen you are on, and issue the same-origin read-only requests described above |
+
+## Children
+
+The extension is a tool for enterprise identity administrators and is not
+directed at children.
+
+## Changes
+
+Material changes to this policy will be published with a new "last updated"
+date before the version they apply to is released.
+
+## Contact
+
+Questions about this policy: **panchal.fenil09@gmail.com**
