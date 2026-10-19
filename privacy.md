@@ -4,7 +4,7 @@
 An independent extension. Not affiliated with, endorsed by, or sponsored by
 Okta, Inc. Okta is a trademark of Okta, Inc.
 
-Last updated: October 16, 2026
+Last updated: October 19, 2026
 
 ## The short version
 
@@ -14,8 +14,9 @@ makes goes to your own Okta organization, from your own browser, using the Okta
 session you are already signed in to.
 
 What you choose to keep, such as notes, snapshots and access reviews, stays in
-your browser on this computer. The developer cannot see any of it, because it
-never leaves your machine.
+your browser on this computer, and so do the lists of groups, applications and
+group rules it keeps so they show at once. The developer cannot see any of it,
+because it never leaves your machine.
 
 ## What the extension reads
 
@@ -70,6 +71,21 @@ so one org's data is never shown in another:
 | Privileged applications | which applications you marked as privileged | you marked them |
 | Certificate check | how many signing certificates are expired or expiring, and the names of the three that expire soonest | you, or the home screen, ran the check |
 | Since you last looked | the counts on the home screen the last time you saw it, so it can show what changed | you opened the home screen |
+
+**Lists kept so they show at once, per org.** So that Groups and Applications
+show straight away after a reload or in a new session, the extension keeps the
+last list it read of each, and of your org's group rules:
+
+| What | What it holds |
+| --- | --- |
+| Groups | each group's name, description, type, and member, application and push mapping counts |
+| Applications | each application's name, label, status, sign-on mode and provisioning features |
+| Group rules | each rule's name, status, condition and the groups it assigns to |
+
+No member list, profile or person is kept this way. A list older than fifteen
+minutes is read again from Okta in the background and replaced. The panel's
+refresh button deletes these lists, and they are kept only while they are
+smaller than a fixed size.
 
 You can delete any note, snapshot or access review from the panel, and stop
 watching anything you watch. Removing the extension from Chrome deletes
@@ -138,7 +154,7 @@ inside the extension package.
 
 | Permission | Why |
 | --- | --- |
-| `storage` | keep your preferences, and the notes, watchlist, snapshots and reviews you choose to keep, as listed above |
+| `storage` | keep your preferences, the notes, watchlist, snapshots and reviews you choose to keep, and the lists of groups, applications and rules kept so they show at once, as listed above |
 | `sidePanel` | the interface is a Chrome side panel, so it can sit beside the console |
 | `scripting` | put the console-page script back into an admin tab that was already open, for example after the extension updates |
 | host access to the admin console paths above | follow which console screen you are on, and issue the same-origin read-only requests described above |
